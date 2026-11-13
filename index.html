@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Express Mobile Lab | NHA-Certified Mobile Blood Draw Services</title>
+  <meta name="description" content="Express Mobile Lab provides convenient mobile blood draw services performed by an NHA-Certified Medical Assistant. NPI-registered. Doctor's order required directly from your physician prior to scheduling." />
+  <link rel="icon" type="image/png" href="logo.png" />
+  <style>
+    :root {
+      --primary: #dc2626;       /* Vibrant Medical Crimson */
+      --primary-dark: #991b1b;  /* Deep Crimson Hover */
+      --primary-glow: rgba(220, 38, 38, 0.18);
+      --secondary: #1e293b;     /* Deep Slate */
+      --secondary-dark: #0f172a;/* Midnight Slate */
+      --red-tint: #fef2f2;      /* Soft Blush Tint */
+      --bg-light: #f8fafc;      /* Clean Alabaster */
+      --text-dark: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text-dark);
+      line-height: 1.5;
+      background-color: var(--white);
+      font-size: 0.96rem;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header & Navigation */
+    header {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0.6rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+
+    .logo-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      text-decoration: none;
+    }
+
+    .logo-img {
+      height: 54px;
+      width: 54px;
+      display: block;
+      object-fit: contain;
+      border-radius: 6px;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .brand-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--secondary-dark);
+      letter-spacing: -0.4px;
+    }
+
+    .brand-title span {
+      color: var(--primary);
+    }
+
+    .brand-sub {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    nav {
+      display: flex;
+      gap: 1.4rem;
+      align-items: center;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--secondary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--primary);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+      color: var(--white);
+      padding: 0.65rem 1.35rem;
+      border-radius: 7px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.92rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(185, 28, 28, 0.28);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(185, 28, 28, 0.36);
+      background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+      color: var(--white);
+    }
+
+    .btn-outline-light {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--white);
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      box-shadow: none;
+    }
+
+    .btn-outline-light:hover {
+      background: var(--white);
+      color: var(--secondary-dark);
+      border-color: var(--white);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Hero Section - High Contrast Midnight Slate & Crimson Accent */
+    .hero {
+      background: radial-gradient(circle at 80% 20%, rgba(220, 38, 38, 0.22) 0%, transparent 45%),
+                  linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: var(--white);
+      padding: 3rem 1.25rem 4.25rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      max-width: 780px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-brand-name {
+      font-size: 1.15rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2.5px;
+      color: #f87171;
+      margin-bottom: 0.55rem;
+      display: block;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(255, 255, 255, 0.08);
+      color: #e2e8f0;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.28rem 0.9rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      letter-spacing: 0.2px;
+    }
+
+    .hero h1 {
+      font-size: 2.35rem;
+      line-height: 1.15;
+      color: var(--white);
+      margin-bottom: 0.85rem;
+      font-weight: 800;
+      letter-spacing: -0.6px;
+    }
+
+    .hero h1 span {
+      color: #f87171;
+    }
+
+    .hero p {
+      font-size: 1.06rem;
+      color: #cbd5e1;
+      margin-bottom: 1.6rem;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 0.85rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 1.75rem;
+    }
+
+    .trust-strip {
+      display: flex;
+      justify-content: center;
+      gap: 1.4rem;
+      flex-wrap: wrap;
+      font-size: 0.82rem;
+      color: #94a3b8;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 1.15rem;
+    }
+
+    .trust-strip span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .trust-strip strong {
+      color: #e2e8f0;
+    }
+
+    /* Elevated Policy Callout Bar */
+    .policy-bar {
+      max-width: 1020px;
+      margin: -2.25rem auto 0;
+      padding: 0 1.25rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .policy-card {
+      background: var(--white);
+      border-top: 4px solid var(--primary);
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.15rem 1.5rem;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.1), 0 4px 10px -2px rgba(15, 23, 42, 0.05);
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .policy-item {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+    }
+
+    .policy-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: var(--red-tint);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      flex-shrink: 0;
+      border: 1px solid #fecaca;
+    }
+
+    .policy-item strong {
+      display: block;
+      color: var(--secondary-dark);
+      font-size: 0.95rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .policy-item span {
+      font-size: 0.87rem;
+      color: var(--text-muted);
+      display: block;
+    }
+
+    /* Sections */
+    section {
+      padding: 3rem 1.25rem;
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 2rem;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 0.35rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.8rem;
+      color: var(--secondary-dark);
+      margin-bottom: 0.4rem;
+      font-weight: 800;
+      letter-spacing: -0.4px;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+    }
+
+    /* Steps Grid */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 1.35rem;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px -8px rgba(15, 23, 42, 0.09);
+      border-color: #cbd5e1;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+      color: var(--white);
+      font-weight: 800;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      flex-shrink: 0;
+      box-shadow: 0 3px 8px rgba(185, 28, 28, 0.25);
+    }
+
+    .card h3 {
+      font-size: 1.08rem;
+      color: var(--secondary-dark);
+      font-weight: 700;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.91rem;
+    }
+
+    /* Services & Pricing Split */
+    .bg-light {
+      background-color: var(--bg-light);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .split-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 1.85rem;
+      align-items: start;
+    }
+
+    .service-card-list {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
+    }
+
+    .checklist {
+      list-style: none;
+    }
+
+    .checklist li {
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      font-size: 0.94rem;
+      font-weight: 500;
+    }
+
+    .checklist li:last-child {
+      border-bottom: none;
+    }
+
+    .check-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--red-tint);
+      color: var(--primary);
+      font-weight: 800;
+      font-size: 0.78rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .cred-box {
+      margin-top: 1rem;
+      background: var(--bg-light);
+      border: 1px solid var(--border);
+      padding: 0.85rem;
+      border-radius: 6px;
+      font-size: 0.86rem;
+      color: var(--text-dark);
+    }
+
+    .pricing-box {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-top: 5px solid var(--secondary-dark);
+      border-radius: 10px;
+      padding: 1.5rem;
+      box-shadow: 0 8px 20px -6px rgba(15, 23, 42, 0.08);
+    }
+
+    .pricing-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .pricing-header h3 {
+      color: var(--secondary-dark);
+      font-size: 1.22rem;
+      font-weight: 800;
+    }
+
+    .rate-pill {
+      background: var(--secondary-dark);
+      color: var(--white);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--border);
+      font-weight: 500;
+      font-size: 0.94rem;
+    }
+
+    .price-row:last-of-type {
+      border-bottom: none;
+    }
+
+    .price-tag {
+      font-weight: 800;
+      color: var(--primary);
+      font-size: 1.02rem;
+    }
+
+    .note-box {
+      margin-top: 0.95rem;
+      background: var(--red-tint);
+      border-left: 3.5px solid var(--primary);
+      padding: 0.85rem;
+      border-radius: 6px;
+      font-size: 0.86rem;
+      color: var(--text-dark);
+    }
+
+    /* FAQ Accordion */
+    details {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 0.65rem;
+      padding: 0.9rem 1.2rem;
+      transition: border-color 0.2s;
+    }
+
+    details[open] {
+      border-color: #cbd5e1;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+    }
+
+    summary {
+      font-weight: 700;
+      color: var(--secondary-dark);
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: "+";
+      font-size: 1.25rem;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    details[open] summary::after {
+      content: "−";
+    }
+
+    details p {
+      margin-top: 0.6rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Compact Booking Form */
+    .booking-wrapper {
+      max-width: 740px;
+      margin: 0 auto;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-top: 5px solid var(--primary);
+      border-radius: 10px;
+      padding: 1.75rem;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.07);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.95rem 1.15rem;
+    }
+
+    .form-group {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      font-size: 0.87rem;
+      color: var(--secondary-dark);
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.62rem 0.75rem;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 0.93rem;
+      font-family: inherit;
+      background-color: #fcfdfe;
+      transition: border-color 0.15s, box-shadow 0.15s, background-color 0.15s;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      background-color: var(--white);
+      box-shadow: 0 0 0 3px var(--primary-glow);
+    }
+
+    .checkbox-group {
+      display: flex;
+      gap: 0.6rem;
+      align-items: flex-start;
+      margin: 1.1rem 0;
+      font-size: 0.86rem;
+      color: var(--text-dark);
+      background: var(--bg-light);
+      padding: 0.75rem;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+
+    .checkbox-group input {
+      width: auto;
+      margin-top: 0.2rem;
+    }
+
+    .policy-link {
+      color: var(--primary);
+      text-decoration: underline;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    #formStatus {
+      display: none;
+      margin-top: 1rem;
+      padding: 0.85rem;
+      border-radius: 6px;
+      font-size: 0.92rem;
+      text-align: center;
+      font-weight: 500;
+    }
+
+    .status-success {
+      background: #ecfdf5;
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+
+    .status-error {
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--secondary-dark);
+      color: #cbd5e1;
+      padding: 2.25rem 1.25rem;
+      text-align: center;
+      font-size: 0.88rem;
+      border-top: 4px solid var(--primary);
+    }
+
+    .footer-brand-lockup {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: var(--white);
+      padding: 0.5rem 1.15rem;
+      border-radius: 8px;
+      margin-bottom: 0.85rem;
+    }
+
+    .footer-logo-img {
+      height: 44px;
+      width: 44px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .footer-brand-text {
+      text-align: left;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--secondary-dark);
+      line-height: 1.1;
+    }
+
+    .footer-brand-text span {
+      color: var(--primary);
+    }
+
+    footer a, .footer-link {
+      color: #fca5a5;
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    footer a:hover, .footer-link:hover {
+      text-decoration: underline;
+    }
+
+    footer p {
+      margin-bottom: 0.4rem;
+    }
+
+    .legal-links {
+      margin: 0.9rem 0;
+      display: flex;
+      justify-content: center;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      font-size: 0.85rem;
+    }
+
+    .disclaimer {
+      max-width: 780px;
+      margin: 0.75rem auto 0;
+      font-size: 0.76rem;
+      color: #94a3b8;
+      line-height: 1.45;
+    }
+
+    /* Policy Modals */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(3px);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-box {
+      background: var(--white);
+      max-width: 640px;
+      width: 100%;
+      max-height: 85vh;
+      overflow-y: auto;
+      border-radius: 10px;
+      padding: 1.75rem;
+      position: relative;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.25rem;
+      background: none;
+      border: none;
+      font-size: 1.6rem;
+      cursor: pointer;
+      color: var(--text-muted);
+      line-height: 1;
+    }
+
+    .modal-box h3 {
+      color: var(--secondary-dark);
+      margin-bottom: 0.75rem;
+      font-size: 1.3rem;
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 0.4rem;
+    }
+
+    .modal-box h4 {
+      color: var(--secondary-dark);
+      margin-top: 1rem;
+      margin-bottom: 0.25rem;
+      font-size: 0.98rem;
+    }
+
+    .modal-box p, .modal-box li {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    @media (max-width: 640px) {
+      .hero h1 {
+        font-size: 1.85rem;
+      }
+      .brand-title {
+        font-size: 1.15rem;
+      }
+      nav {
+        display: none;
+      }
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .booking-wrapper {
+        padding: 1.25rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="logo-link">
+        <img src="logo.png" alt="Express Mobile Lab Logo" class="logo-img" />
+        <div class="brand-text">
+          <div class="brand-title">Express <span>Mobile Lab</span></div>
+          <div class="brand-sub">NHA-Certified Mobile Blood Draws</div>
+        </div>
+      </a>
+      <nav>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#services">Services &amp; Rates</a>
+        <a href="#faq">FAQ</a>
+        <a href="#book" class="btn">Request a Draw</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-brand-name">Express Mobile Lab</span>
+      <span class="badge">NHA-Certified Medical Assistant • NPI-Registered Mobile Service</span>
+      <h1>Convenient Mobile Blood Draws <span>Brought to Your Door</span></h1>
+      <p>Skip the crowded lab waiting room. Fast, gentle blood collection performed by an NHA-Certified Medical Assistant in the comfort of your home or workplace—and delivered straight to your testing lab.</p>
+      <div class="hero-actions">
+        <a href="#book" class="btn">Request Appointment</a>
+        <a href="tel:18002829033" class="btn btn-outline-light">Call 1-800-282-9033</a>
+      </div>
+      <div class="trust-strip">
+        <span><strong>✓ NHA-Certified</strong> Clinical Care</span>
+        <span><strong>✓ NPI-Registered</strong> &amp; HIPAA Compliant</span>
+        <span><strong>✓ Same-Day</strong> Lab Drop-Off</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Important Policy Callout Bar -->
+  <div class="policy-bar">
+    <div class="policy-card">
+      <div class="policy-item">
+        <div class="policy-icon">Rx</div>
+        <div>
+          <strong>Doctor's Order Required Before Scheduling</strong>
+          <span>Your physician's office must send your lab order directly to <strong>expressmobilelab@mail.com</strong> prior to confirming an appointment.</span>
+        </div>
+      </div>
+      <div class="policy-item">
+        <div class="policy-icon">$</div>
+        <div>
+          <strong>Cash or Credit Card via Invoice</strong>
+          <span>We accept cash at the time of service or credit card payments via invoice. We do not bill health insurance for mobile visits.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How It Works -->
+  <section id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Simple 3-Step Process</span>
+        <h2>How Mobile Blood Draws Work</h2>
+        <p>From your doctor's lab requisition to same-day laboratory delivery.</p>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-top">
+            <div class="step-number">1</div>
+            <h3>Doctor Sends Your Order</h3>
+          </div>
+          <p>Ask your doctor's office to email your signed lab order directly to <strong>expressmobilelab@mail.com</strong>. We must have it on file before scheduling.</p>
+        </div>
+        <div class="card">
+          <div class="card-top">
+            <div class="step-number">2</div>
+            <h3>Confirm Time &amp; Travel Fee</h3>
+          </div>
+          <p>Submit your request below or call <strong>1-800-282-9033</strong>. Once your order is verified, we confirm your appointment window and exact fee.</p>
+        </div>
+        <div class="card">
+          <div class="card-top">
+            <div class="step-number">3</div>
+            <h3>At-Home Draw &amp; Delivery</h3>
+          </div>
+          <p>We come to your location, complete your blood draw safely, and deliver your labeled tubes directly to Quest, LabCorp, or your designated lab.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services & Transparent Fees -->
+  <section id="services" class="bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Services &amp; Pricing</span>
+        <h2>Blood Draw Services &amp; Transparent Rates</h2>
+        <p>Clear, upfront mobile pricing with no surprise insurance delays.</p>
+      </div>
+      <div class="split-grid">
+        <div class="service-card-list">
+          <h3 style="color: var(--secondary-dark); font-size: 1.15rem; margin-bottom: 0.65rem; font-weight: 800;">What We Provide</h3>
+          <ul class="checklist">
+            <li><span class="check-badge">✓</span> Routine Physician-Ordered Blood Draws (Venipuncture)</li>
+            <li><span class="check-badge">✓</span> Specialty &amp; Genetic Blood Test Kits (Natera, Quest, LabCorp)</li>
+            <li><span class="check-badge">✓</span> Standing &amp; Recurring Physician Lab Orders</li>
+            <li><span class="check-badge">✓</span> Senior, Homebound &amp; Post-Op Patient Blood Draws</li>
+            <li><span class="check-badge">✓</span> Same-Day Specimen Handling &amp; Direct Lab Delivery</li>
+          </ul>
+          <div class="cred-box">
+            <strong>For Physicians &amp; Clinics:</strong> Express Mobile Lab is operated by an <strong>NHA-Certified Medical Assistant</strong> with an active <strong>NPI</strong>. Please email signed lab orders directly to <strong>expressmobilelab@mail.com</strong> prior to patient scheduling.
+          </div>
+        </div>
+
+        <div class="pricing-box">
+          <div class="pricing-header">
+            <h3>Service &amp; Travel Rates</h3>
+            <span class="rate-pill">Upfront Pricing</span>
+          </div>
+          <div class="price-row">
+            <span>Mobile Blood Draw Fee</span>
+            <span class="price-tag">$55.00</span>
+          </div>
+          <div class="price-row">
+            <span>Local Travel Fee (0–15 miles)</span>
+            <span class="price-tag">$20.00</span>
+          </div>
+          <div class="price-row">
+            <span>Extended Travel Fee (15–30 miles)</span>
+            <span class="price-tag">$35.00+</span>
+          </div>
+          <div class="price-row">
+            <span>Additional Patient (Same Address)</span>
+            <span class="price-tag">$30.00</span>
+          </div>
+          <div class="note-box">
+            <strong>Payment Policy:</strong> We accept <strong>cash</strong> at the time of service or <strong>credit card payments via invoice</strong>. We do not accept checks or bill insurance for mobile draw and travel fees. Your insurance still covers the lab testing itself when billed by Quest, LabCorp, or your hospital lab.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq">
+    <div class="container" style="max-width: 780px;">
+      <div class="section-header">
+        <span class="section-tag">Common Questions</span>
+        <h2>Frequently Asked Questions</h2>
+      </div>
+
+      <details>
+        <summary>How do I get my doctor's order to you?</summary>
+        <p>Have your doctor's office email your signed lab order directly to <strong>expressmobilelab@mail.com</strong>. Receiving the order straight from your provider ensures everything is accurate and verified before we schedule your visit.</p>
+      </details>
+
+      <details>
+        <summary>Can I schedule an appointment before my doctor sends the order?</summary>
+        <p>No. A valid physician's lab order must be received directly from your provider prior to scheduling your appointment.</p>
+      </details>
+
+      <details>
+        <summary>How do I pay for my mobile visit?</summary>
+        <p>You can pay with <strong>cash</strong> at the time of your appointment or by <strong>credit card via invoice</strong>. Your health insurance card is still provided to the testing laboratory (such as LabCorp or Quest) to cover the actual lab analysis.</p>
+      </details>
+
+      <details>
+        <summary>What is your cancellation and refund policy?</summary>
+        <p>You may cancel or reschedule free of charge up to 4 hours before your scheduled arrival window. Cancellations made with less than 4 hours' notice, missed appointments, or inability to complete a draw due to a missing order will forfeit the travel fee. <span class="policy-link" onclick="openModal('refundModal')">View full Refund Policy</span>.</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- Appointment Request Section -->
+  <section id="book" class="bg-light">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Get Started</span>
+        <h2>Request a Mobile Blood Draw</h2>
+        <p>Have your doctor send your order to <strong>expressmobilelab@mail.com</strong>, then fill out the form below. Your request goes straight to our inbox.</p>
+      </div>
+
+      <div class="booking-wrapper">
+        <form id="bookingForm" action="https://formsubmit.co/ajax/expressmobilelab@mail.com" method="POST">
+          <!-- FormSubmit Settings -->
+          <input type="hidden" name="_subject" value="New Mobile Blood Draw Request - Express Mobile Lab" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="false" />
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="name">Patient Full Name *</label>
+              <input type="text" id="name" name="Patient Name" required placeholder="Jane Doe" />
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number *</label>
+              <input type="tel" id="phone" name="Phone Number" required placeholder="(301) 555-0123" />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Patient Email (for invoice/confirmation) *</label>
+              <input type="email" id="email" name="email" required placeholder="patient@example.com" />
+            </div>
+
+            <div class="form-group">
+              <label for="city">City &amp; Zip Code *</label>
+              <input type="text" id="city" name="City and Zip" required placeholder="e.g., Waldorf, MD 20601" />
+            </div>
+
+            <div class="form-group">
+              <label for="doctor">Ordering Doctor / Clinic *</label>
+              <input type="text" id="doctor" name="Ordering Doctor" required placeholder="Dr. Smith / Clinic Name" />
+            </div>
+
+            <div class="form-group">
+              <label for="lab">Designated Laboratory</label>
+              <select id="lab" name="Designated Lab">
+                <option value="LabCorp">LabCorp</option>
+                <option value="Quest Diagnostics">Quest Diagnostics</option>
+                <option value="Specialty Kit">Specialty Kit (Natera, etc.)</option>
+                <option value="Hospital / Other">Hospital / Other Lab</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="payment">Preferred Payment Method</label>
+              <select id="payment" name="Payment Method">
+                <option value="Cash at Appointment">Cash at Appointment</option>
+                <option value="Credit Card via Invoice">Credit Card via Invoice</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="date">Preferred Date &amp; Time *</label>
+              <input type="text" id="date" name="Preferred Date and Time" required placeholder="e.g., Friday before 10 AM" />
+            </div>
+          </div>
+
+          <div class="checkbox-group">
+            <input type="checkbox" id="confirmPolicy" required />
+            <label for="confirmPolicy" style="font-weight: 400;">
+              I confirm my <strong>doctor's order will be sent directly from my physician</strong> to <strong>expressmobilelab@mail.com</strong> prior to scheduling, and I agree to the <span class="policy-link" onclick="openModal('termsModal')">Terms &amp; Conditions</span>, <span class="policy-link" onclick="openModal('privacyModal')">Privacy Policy</span>, and <span class="policy-link" onclick="openModal('refundModal')">Refund Policy</span>. *
+            </label>
+          </div>
+
+          <button type="submit" id="submitBtn" class="btn" style="width: 100%; font-size: 1rem; padding: 0.78rem;">Submit Appointment Request</button>
+          <div id="formStatus"></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-brand-lockup">
+      <img src="logo.png" alt="Express Mobile Lab" class="footer-logo-img" />
+      <div class="footer-brand-text">Express <span>Mobile Lab</span></div>
+    </div>
+    <p>NHA-Certified Mobile Blood Draw Services • NPI-Registered • Physician Order Required</p>
+    <p>Phone: <a href="tel:18002829033">1-800-282-9033</a> • Orders &amp; Inquiries: <a href="mailto:expressmobilelab@mail.com">expressmobilelab@mail.com</a></p>
+
+    <div class="legal-links">
+      <span class="footer-link" onclick="openModal('privacyModal')">Privacy &amp; HIPAA Notice</span>
+      <span>•</span>
+      <span class="footer-link" onclick="openModal('termsModal')">Terms &amp; Conditions</span>
+      <span>•</span>
+      <span class="footer-link" onclick="openModal('refundModal')">Refund &amp; Cancellation Policy</span>
+    </div>
+
+    <p class="disclaimer">
+      <strong>Medical Disclaimer:</strong> Express Mobile Lab provides physician-ordered mobile phlebotomy and specimen collection services only. We do not diagnose conditions, interpret lab results, prescribe medications, or provide medical advice. Always consult your ordering physician regarding your test results and medical care.
+    </p>
+    <p style="margin-top: 0.75rem; font-size: 0.78rem; opacity: 0.75;">&copy; 2026 Express Mobile Lab. All rights reserved.</p>
+  </footer>
+
+  <!-- Privacy Policy Modal -->
+  <div id="privacyModal" class="modal-overlay" onclick="closeOnOutside(event, 'privacyModal')">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('privacyModal')">&times;</button>
+      <h3>Privacy Policy &amp; HIPAA Confidentiality Notice</h3>
+      <p><strong>Effective Date:</strong> January 1, 2026</p>
+      <h4>1. Information We Collect</h4>
+      <p>When you request a mobile blood draw or your physician submits a lab order, we collect only the information necessary to perform your service: your name, contact details, service address, ordering physician's information, and the laboratory requisition.</p>
+      <h4>2. How We Use &amp; Protect Your Information</h4>
+      <p>We strictly safeguard your personal and health information in accordance with HIPAA privacy standards. Your information is used solely to verify your physician's order, schedule your appointment, process invoicing, and deliver your labeled specimen to your designated testing laboratory (such as Quest Diagnostics or LabCorp).</p>
+      <h4>3. Information Sharing</h4>
+      <p>We never sell, rent, or trade your personal or medical information. Data is shared only with your ordering healthcare provider and the designated testing laboratory performing your analysis.</p>
+      <h4>4. Contact Us</h4>
+      <p>For privacy questions or records requests, contact us at <strong>expressmobilelab@mail.com</strong> or call <strong>1-800-282-9033</strong>.</p>
+    </div>
+  </div>
+
+  <!-- Terms & Conditions Modal -->
+  <div id="termsModal" class="modal-overlay" onclick="closeOnOutside(event, 'termsModal')">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('termsModal')">&times;</button>
+      <h3>Terms &amp; Conditions</h3>
+      <h4>1. Scope of Service</h4>
+      <p>Express Mobile Lab operates solely as an NPI-registered mobile specimen collection service performed by an NHA-Certified Medical Assistant. We do not practice medicine, offer medical consultations, or interpret test results.</p>
+      <h4>2. Mandatory Physician Order</h4>
+      <p>A valid, signed laboratory order must be sent directly from your licensed healthcare provider to <strong>expressmobilelab@mail.com</strong> before any appointment will be confirmed or performed.</p>
+      <h4>3. Payment Terms</h4>
+      <p>Mobile collection and travel fees are separate from laboratory testing charges. Payment is due via <strong>cash</strong> at the time of service or <strong>credit card via invoice</strong> prior to/at the time of service. We do not bill health insurance for mobile fees.</p>
+      <h4>4. Safe Environment &amp; Patient Readiness</h4>
+      <p>Clients agree to provide a clean, well-lit, smoke-free, and safe environment (with pets secured) during the visit. Patients must present a valid photo ID and their insurance card (for the testing lab's billing records) upon arrival.</p>
+    </div>
+  </div>
+
+  <!-- Refund Policy Modal -->
+  <div id="refundModal" class="modal-overlay" onclick="closeOnOutside(event, 'refundModal')">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('refundModal')">&times;</button>
+      <h3>Refund &amp; Cancellation Policy</h3>
+      <h4>1. Cancellations &amp; Rescheduling (4+ Hours Notice)</h4>
+      <p>Appointments canceled or rescheduled at least <strong>4 hours prior</strong> to the scheduled arrival window will receive a <strong>100% refund</strong> of any prepaid invoice fees at no penalty.</p>
+      <h4>2. Late Cancellations &amp; No-Shows</h4>
+      <p>If an appointment is canceled with less than 4 hours' notice, or if our specialist arrives at the location and cannot complete the draw due to patient absence, unsafe conditions, or patient refusal, the <strong>travel fee is non-refundable</strong> (or will be billed via invoice).</p>
+      <h4>3. Unsuccessful Venipuncture</h4>
+      <p>In the rare event a blood draw cannot be completed after two standard venipuncture attempts due to vein accessibility, the mobile draw fee will be refunded or credited toward a future attempt, while the travel fee remains non-refundable to cover mileage and transit time.</p>
+      <h4>4. Completed Services</h4>
+      <p>Once blood collection has been completed and delivered to the designated laboratory or courier, all mobile draw and travel fees are final and non-refundable.</p>
+    </div>
+  </div>
+
+  <script>
+    // Modal Controls
+    function openModal(id) {
+      document.getElementById(id).style.display = 'flex';
+    }
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+    function closeOnOutside(e, id) {
+      if (e.target.id === id) {
+        closeModal(id);
+      }
+    }
+
+    // Direct Email Submission via FormSubmit
+    const form = document.getElementById('bookingForm');
+    const statusBox = document.getElementById('formStatus');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending Request...';
+      statusBox.style.display = 'none';
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          statusBox.className = 'status-success';
+          statusBox.style.display = 'block';
+          statusBox.innerHTML = '✓ <strong>Request Sent!</strong> Your appointment request has been emailed directly to <strong>expressmobilelab@mail.com</strong>. Once we verify your doctor\'s order, we will contact you to confirm your time and travel fee.';
+          form.reset();
+        } else {
+          throw new Error('Network error');
+        }
+      } catch (err) {
+        statusBox.className = 'status-error';
+        statusBox.style.display = 'block';
+        statusBox.innerHTML = 'Unable to send automatically right now. Please call <strong>1-800-282-9033</strong> or email <strong>expressmobilelab@mail.com</strong> directly.';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Appointment Request';
+      }
+    });
+  </script>
+
+</body>
+</html>
