@@ -255,7 +255,7 @@
 
     /* Elevated Policy Callout Bar */
     .policy-bar {
-      max-width: 1020px;
+      max-width: 1080px;
       margin: -2.25rem auto 0;
       padding: 0 1.25rem;
       position: relative;
@@ -272,7 +272,7 @@
       padding: 1.15rem 1.5rem;
       box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.1), 0 4px 10px -2px rgba(15, 23, 42, 0.05);
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 1.25rem;
     }
 
@@ -292,6 +292,7 @@
       align-items: center;
       justify-content: center;
       font-weight: 800;
+      font-size: 0.85rem;
       flex-shrink: 0;
       border: 1px solid #fecaca;
     }
@@ -872,6 +873,13 @@
         </div>
       </div>
       <div class="policy-item">
+        <div class="policy-icon">ID</div>
+        <div>
+          <strong>Valid Government ID &amp; Exact Match</strong>
+          <span>Patient must present a valid government-issued photo ID. Your <strong>full name and date of birth</strong> must match the doctor's order exactly.</span>
+        </div>
+      </div>
+      <div class="policy-item">
         <div class="policy-icon">$</div>
         <div>
           <strong>Cash or Credit Card via Invoice</strong>
@@ -909,7 +917,7 @@
             <div class="step-number">3</div>
             <h3>At-Home Draw &amp; Delivery</h3>
           </div>
-          <p>We come to your location, complete your blood draw safely, and deliver your labeled tubes directly to Quest, LabCorp, or your designated lab.</p>
+          <p>We verify your valid government ID against your doctor's order, complete your blood draw safely, and deliver your labeled tubes directly to your designated lab.</p>
         </div>
       </div>
     </div>
@@ -976,6 +984,11 @@
       </div>
 
       <details>
+        <summary>What identification do I need for my appointment?</summary>
+        <p>All patients must present a <strong>valid, unexpired government-issued photo ID</strong> (such as a driver's license, state ID, or passport) at the time of the visit. All information on your ID—specifically your <strong>full legal name and date of birth</strong>—must match your doctor's lab order before blood can be drawn.</p>
+      </details>
+
+      <details>
         <summary>How do I get my doctor's order to you?</summary>
         <p>Have your doctor's office email your signed lab order directly to <strong>expressmobilelab@mail.com</strong>. Receiving the order straight from your provider ensures everything is accurate and verified before we schedule your visit.</p>
       </details>
@@ -992,7 +1005,7 @@
 
       <details>
         <summary>What is your cancellation and refund policy?</summary>
-        <p>You may cancel or reschedule free of charge up to 4 hours before your scheduled arrival window. Cancellations made with less than 4 hours' notice, missed appointments, or inability to complete a draw due to a missing order will forfeit the travel fee. <span class="policy-link" onclick="openModal('refundModal')">View full Refund Policy</span>.</p>
+        <p>You may cancel or reschedule free of charge up to 4 hours before your scheduled arrival window. Cancellations made with less than 4 hours' notice, missed appointments, or inability to complete a draw due to a missing order or invalid/mismatched ID will forfeit the travel fee. <span class="policy-link" onclick="openModal('refundModal')">View full Refund Policy</span>.</p>
       </details>
     </div>
   </section>
@@ -1015,7 +1028,7 @@
 
           <div class="form-grid">
             <div class="form-group">
-              <label for="name">Patient Full Name *</label>
+              <label for="name">Patient Full Name (as on Gov. ID) *</label>
               <input type="text" id="name" name="Patient Name" required placeholder="Jane Doe" />
             </div>
 
@@ -1064,9 +1077,9 @@
           </div>
 
           <div class="checkbox-group">
-            <input type="checkbox" id="confirmPolicy" required />
+            <input type="checkbox" id="confirmPolicy" name="Policy & ID Confirmation" value="Confirmed" required />
             <label for="confirmPolicy" style="font-weight: 400;">
-              I confirm my <strong>doctor's order will be sent directly from my physician</strong> to <strong>expressmobilelab@mail.com</strong> prior to scheduling, and I agree to the <span class="policy-link" onclick="openModal('termsModal')">Terms &amp; Conditions</span>, <span class="policy-link" onclick="openModal('privacyModal')">Privacy Policy</span>, and <span class="policy-link" onclick="openModal('refundModal')">Refund Policy</span>. *
+              I confirm that: (1) my <strong>doctor's order will be sent directly from my physician</strong> to <strong>expressmobilelab@mail.com</strong> prior to scheduling, (2) the patient has a <strong>valid government-issued photo ID</strong> and all information (<strong>full name and date of birth</strong>) matches the doctor's order, and (3) I agree to the <span class="policy-link" onclick="openModal('termsModal')">Terms &amp; Conditions</span>, <span class="policy-link" onclick="openModal('privacyModal')">Privacy Policy</span>, and <span class="policy-link" onclick="openModal('refundModal')">Refund Policy</span>. *
             </label>
           </div>
 
@@ -1083,7 +1096,7 @@
       <img src="logo.png" alt="Express Mobile Lab" class="footer-logo-img" />
       <div class="footer-brand-text">Express <span>Mobile Lab</span></div>
     </div>
-    <p>NHA-Certified Mobile Blood Draw Services • NPI-Registered • Physician Order Required</p>
+    <p>NHA-Certified Mobile Blood Draw Services • NPI-Registered • Physician Order &amp; Valid Gov. ID Required</p>
     <p>Phone: <a href="tel:18002829033">1-800-282-9033</a> • Orders &amp; Inquiries: <a href="mailto:expressmobilelab@mail.com">expressmobilelab@mail.com</a></p>
 
     <div class="legal-links">
@@ -1107,9 +1120,9 @@
       <h3>Privacy Policy &amp; HIPAA Confidentiality Notice</h3>
       <p><strong>Effective Date:</strong> January 1, 2026</p>
       <h4>1. Information We Collect</h4>
-      <p>When you request a mobile blood draw or your physician submits a lab order, we collect only the information necessary to perform your service: your name, contact details, service address, ordering physician's information, and the laboratory requisition.</p>
+      <p>When you request a mobile blood draw or your physician submits a lab order, we collect only the information necessary to perform your service: your name, date of birth, government ID verification, contact details, service address, ordering physician's information, and the laboratory requisition.</p>
       <h4>2. How We Use &amp; Protect Your Information</h4>
-      <p>We strictly safeguard your personal and health information in accordance with HIPAA privacy standards. Your information is used solely to verify your physician's order, schedule your appointment, process invoicing, and deliver your labeled specimen to your designated testing laboratory (such as Quest Diagnostics or LabCorp).</p>
+      <p>We strictly safeguard your personal and health information in accordance with HIPAA privacy standards. Your information is used solely to verify your identity and physician's order, schedule your appointment, process invoicing, and deliver your labeled specimen to your designated testing laboratory (such as Quest Diagnostics or LabCorp).</p>
       <h4>3. Information Sharing</h4>
       <p>We never sell, rent, or trade your personal or medical information. Data is shared only with your ordering healthcare provider and the designated testing laboratory performing your analysis.</p>
       <h4>4. Contact Us</h4>
@@ -1128,8 +1141,8 @@
       <p>A valid, signed laboratory order must be sent directly from your licensed healthcare provider to <strong>expressmobilelab@mail.com</strong> before any appointment will be confirmed or performed.</p>
       <h4>3. Payment Terms</h4>
       <p>Mobile collection and travel fees are separate from laboratory testing charges. Payment is due via <strong>cash</strong> at the time of service or <strong>credit card via invoice</strong> prior to/at the time of service. We do not bill health insurance for mobile fees.</p>
-      <h4>4. Safe Environment &amp; Patient Readiness</h4>
-      <p>Clients agree to provide a clean, well-lit, smoke-free, and safe environment (with pets secured) during the visit. Patients must present a valid photo ID and their insurance card (for the testing lab's billing records) upon arrival.</p>
+      <h4>4. Patient Identification &amp; Safe Environment</h4>
+      <p>Patients must present a <strong>valid, unexpired government-issued photo ID</strong> upon arrival, and all patient information (including <strong>full legal name and date of birth</strong>) must match the physician's lab order exactly before specimens can be collected. Patients should also have their health insurance card available for the testing lab's billing records and provide a clean, well-lit, smoke-free, and safe environment (with pets secured) during the visit.</p>
     </div>
   </div>
 
@@ -1141,7 +1154,7 @@
       <h4>1. Cancellations &amp; Rescheduling (4+ Hours Notice)</h4>
       <p>Appointments canceled or rescheduled at least <strong>4 hours prior</strong> to the scheduled arrival window will receive a <strong>100% refund</strong> of any prepaid invoice fees at no penalty.</p>
       <h4>2. Late Cancellations &amp; No-Shows</h4>
-      <p>If an appointment is canceled with less than 4 hours' notice, or if our specialist arrives at the location and cannot complete the draw due to patient absence, unsafe conditions, or patient refusal, the <strong>travel fee is non-refundable</strong> (or will be billed via invoice).</p>
+      <p>If an appointment is canceled with less than 4 hours' notice, or if our specialist arrives at the location and cannot complete the draw due to patient absence, missing valid government ID, mismatched order information, unsafe conditions, or patient refusal, the <strong>travel fee is non-refundable</strong> (or will be billed via invoice).</p>
       <h4>3. Unsuccessful Venipuncture</h4>
       <p>In the rare event a blood draw cannot be completed after two standard venipuncture attempts due to vein accessibility, the mobile draw fee will be refunded or credited toward a future attempt, while the travel fee remains non-refundable to cover mileage and transit time.</p>
       <h4>4. Completed Services</h4>
